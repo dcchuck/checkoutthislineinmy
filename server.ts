@@ -54,9 +54,38 @@ router.post('/', function(req, res) {
       res.json({ message: 'success' })
     }
   })
-  //add file type to set of file types
+})
+
+
+async function createRecord(r, fileType) {
+  const githubUrl = await redisConnection.hget(r, 'githubUrl')
+  const description = await redisConnection.hget(r, 'description')
+  const bean = {
+    githubUrl,
+    description,
+    fileType,
+  }
+  console.log(bean)
+  return bean
+}
+
+async function processGet(res) {
+  const fileTypes = await redisConnection.smembers('file_types');
+  const allRecords = []
+  for (let i = 0; i < fileTypes.length; i++) {
+    const records = await redisConnection.smembers(fileTypes[i])
+    for (let j = 0; j < records.length; j++) {
+      const newRecord = await createRecord(records[j], fileTypes[i]);
+      allRecords.push(newRecord)
+    }
+  }
+  res.json(allRecords);
+}
+
+router.get('/', async function(req, res) {
+  processGet(res)
 })
 
 app.use('/api', router);
 
-app.listen(port)
+app.listen(port, () => console.log('running.'))
