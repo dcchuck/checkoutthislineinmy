@@ -11,8 +11,30 @@ import {
 
 const Browse = () => <div>Browse</div>
 
-class App extends Component {
-  render() {
+interface IAppState {
+  records: any[];
+}
+
+class App extends Component <{}, IAppState> {
+  constructor(props: {}) {
+    super(props);
+
+    this.state = {
+      records: []
+    }
+  }
+
+  public componentDidMount() {
+    fetch('/api')
+      .then(response => {
+        return response.json()
+      })
+      .then(mJson => {
+        this.setState({ records: mJson })
+      })
+  }
+
+  public render() {
     return (
       <Router>
         <div>
@@ -22,7 +44,7 @@ class App extends Component {
             <li><Link to="/share">SHARE</Link></li>
           </ul>
 
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={() => <Home records={this.state.records} />} />
           <Route exact path="/browse" component={Browse} />
           <Route exact path="/share" component={Share} />
         </div>
