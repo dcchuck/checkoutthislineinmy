@@ -20,9 +20,9 @@ export default class Home extends Component <IHomeProps, {}> {
   render() {
     return(
       <div>
-       <ol className="ListItems">
+       <div className="ListItems">
           {this.records.map(( record, index ) => <ListItem key={index} githubUrl={record.githubUrl} description={record.description} fileType={record.fileType} />)}
-        </ol>
+        </div>
       </div>
     )
   }

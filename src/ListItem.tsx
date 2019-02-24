@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './ListItem.css'
 
 const Description = (props: any) =>
-  <div>{props.contents}</div>
+  <div className="Description">{props.contents}</div>
 
 const FileTypeBadge = (props: any) =>
   <div className="FileTypeBadge">{props.fileType}</div>
@@ -42,7 +42,7 @@ class ListItem extends Component <IListItemProps, IListItemState> {
 
   public render() {
     return (
-      <li className="ListItem" onClick={this.onClick}>
+      <div className="ListItem" onClick={this.onClick}>
         <div className={this.allClassNames}>
           <Snippet>{this.props.githubUrl}</Snippet>
           { this.state.displayDescription ?
@@ -51,7 +51,7 @@ class ListItem extends Component <IListItemProps, IListItemState> {
               null
           }
           <FileTypeBadge fileType={this.props.fileType} /> </div>
-      </li>
+      </div>
     )
   }
 }
