@@ -3,11 +3,14 @@ import logo from './logo.svg';
 import './App.css';
 import Home from './Home';
 import Share from './Share';
+import Nav from './Nav';
 import {
   BrowserRouter as Router,
   Route,
   Link,
 } from 'react-router-dom'
+
+import demoRecords from './demoRecords';
 
 const Browse = () => <div>Browse</div>
 
@@ -25,26 +28,28 @@ class App extends Component <{}, IAppState> {
   }
 
   public componentDidMount() {
-    fetch('/api')
-      .then(response => {
-        return response.json()
-      })
-      .then(mJson => {
-        this.setState({ records: mJson })
-      })
+    // TODO 
+    // fetch('/api')
+    //   .then(response => {
+    //     return response.json()
+    //   })
+    //   .then(mJson => {
+    //     this.setState({ records: mJson })
+    //   })
+    this.setState( {
+      records: demoRecords
+    } )
   }
 
   public render() {
     return (
       <Router>
         <div>
-          <Link to="/"><h1>Check Out This Line In My...</h1></Link>
-          <ul>
-            <li><Link to="/browse">BROWSE</Link></li>
-            <li><Link to="/share">SHARE</Link></li>
-          </ul>
-
-          <Route exact path="/" component={() => <Home records={this.state.records} />} />
+          <Nav />
+          <Route
+            exact
+            path="/"
+            component={() => <Home records={this.state.records} />} />
           <Route exact path="/browse" component={Browse} />
           <Route exact path="/share" component={Share} />
         </div>

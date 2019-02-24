@@ -1,0 +1,23 @@
+.Title {
+  margin-top: 25px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.Title a {
+  text-decoration: none;
+}
+
+.home {
+  color: white;
+  font-size: xx-large;
+}
+
+.option {
+  color: #777777;
+  font-size: large;
+}
+
+.option:hover {
+  color: white;
+}

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 
-const ListItem = (props: any) => <li>{props.githubUrl} - {props.description} - {props.fileType}</li>
+import ListItem from './ListItem';
 
 interface IHomeProps {
   records: any[];
 }
+
+import './Home.css';
 
 export default class Home extends Component <IHomeProps, {}> {
   public records: any[];
@@ -18,8 +20,8 @@ export default class Home extends Component <IHomeProps, {}> {
   render() {
     return(
       <div>
-       <ol>
-          {this.records.map(record => <ListItem githubUrl={record.githubUrl} description={record.description} fileType={record.fileType} />)}
+       <ol className="ListItems">
+          {this.records.map(( record, index ) => <ListItem key={index} githubUrl={record.githubUrl} description={record.description} fileType={record.fileType} />)}
         </ol>
       </div>
     )

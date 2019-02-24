@@ -36,14 +36,17 @@ interface IReactMessage {
   description: string;
 }
 
+function digestName(githubUrl: string) {
+  return crypto.createHmac('sha256', 'beans').update(githubUrl).digest('hex');
+}
 router.post('/', function(req, res) {
-  const reactAppPayload = req.body as IReactMessage;
-  const fileType = reactAppPayload.fileType;
-  const githubUrl = reactAppPayload.githubUrl;
-  const hashedName = crypto.createHmac('sha256', 'beans').update(githubUrl).digest('hex');
+  const { fileType, githubUrl, description } = req.body as IReactMessage;
+  const uniqueName = digestName(githubUrl);
+
   const pipeline = redisConnection.pipeline();
-  pipeline.hmset(hashedName, { githubUrl: githubUrl, description: reactAppPayload.description })
-  pipeline.sadd(fileType, hashedName);
+
+  pipeline.hmset(uniqueName, { githubUrl, description} )
+  pipeline.sadd(fileType, uniqueName);
   pipeline.sadd('file_types', fileType);
   pipeline.exec(function (err, results) {
     if (err) {
@@ -60,13 +63,11 @@ router.post('/', function(req, res) {
 async function createRecord(r, fileType) {
   const githubUrl = await redisConnection.hget(r, 'githubUrl')
   const description = await redisConnection.hget(r, 'description')
-  const bean = {
+  return {
     githubUrl,
     description,
     fileType,
   }
-  console.log(bean)
-  return bean
 }
 
 async function processGet(res) {
