@@ -1,8 +1,14 @@
 import * as path from 'path';
-import * as crypto from 'crypto';
 import express = require('express');
 import * as bodyParser from 'body-parser';
 import * as Redis from 'ioredis';
+
+interface INewSnippet {
+  description: string;
+  fileType: string;
+  githubUrl?: string;
+  snippet: string;
+}
 
 const redisConnection = new Redis();
 
@@ -30,23 +36,21 @@ app.use(bodyParser.urlencoded({ extended: true }))
  */
 const router = express.Router();
 
-interface IReactMessage {
-  githubUrl: string;
-  fileType: string;
-  description: string;
-}
-
-function digestName(githubUrl: string) {
-  return crypto.createHmac('sha256', 'beans').update(githubUrl).digest('hex');
-}
 router.post('/', function(req, res) {
-  const { fileType, githubUrl, description } = req.body as IReactMessage;
-  const uniqueName = digestName(githubUrl);
+  const requestBody = req.body;
+  const {
+    description,
+    fileType,
+    githubUrl,
+    snippet
+  } = requestBody as INewSnippet;
+
+  const uniqueName = digestName(requestBody);
 
   const pipeline = redisConnection.pipeline();
 
-  pipeline.hmset(uniqueName, { githubUrl, description} )
-  pipeline.sadd(fileType, uniqueName);
+  pipeline.hmset(`snippets:${uniqueName}`, { githubUrl, description, snippet, fileType } )
+  pipeline.sadd('snippets', uniqueName);
   pipeline.sadd('file_types', fileType);
   pipeline.exec(function (err, results) {
     if (err) {
