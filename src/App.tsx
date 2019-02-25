@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
 import Home from './Home';
 import Share from './Share';
 import Nav from './Nav';
