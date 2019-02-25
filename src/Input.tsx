@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 import "./Input.css"
 
 const TextArea = (props: any) =>
-  <label className="Input">
+  <label className="TextArea">
     {props.children}
     <textarea
       cols={80}
       rows={4}
-      className="ActualInput"
+      className="TextAreaActualInput"
       value={props.value}
       onChange={props.onChange}
       name={props.name}

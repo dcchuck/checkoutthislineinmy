@@ -1,9 +1,42 @@
 .Input {
   display: block;
   width: 100%;
+  padding: 10px;
 }
 
 .ActualInput {
   display: block;
-  margin: auto;
+  margin: 1rem auto;
+  width: 80%;
+  font-size: 1rem;
+  padding: 0.25rem;
+  background: black;
+  border: none;
+  font-family: menlo;
+  color: #00FF00;
+}
+
+.ActualInput:focus {
+  outline: none;
+}
+
+.TextArea {
+  display: block;
+  width: 100%;
+  padding: 10px;
+}
+
+.TextAreaActualInput {
+  display: block;
+  margin: 10px auto 10px auto;
+  font-family: menlo;
+  font-size: 1rem;
+  resize: none;
+  background: black;
+  border: none;
+  color: #00FF00;
+}
+
+.TextAreaActualInput:focus {
+  outline: none;
 }

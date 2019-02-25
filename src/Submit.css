@@ -1,0 +1,14 @@
+.Submit {
+  font-family: menlo;
+  margin: auto;
+  font-size: 2rem;
+  background: black;
+  color: #00FF00;
+  border: 3px dashed #00FF00;
+  padding: 1rem 2rem;
+  display: block;
+}
+
+.Submit:hover {
+  cursor: pointer;
+}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Input, TextArea } from "./Input";
+import Submit from "./Submit";
 
 import './Share.css'
 
@@ -55,30 +56,30 @@ export default class Share extends Component <{},IShareState> {
           onChange={this.handleChange}
           name="snippet"
         >
-          Snippet
+          Enter Your Snippet To Share
         </TextArea>
         <TextArea
           value={this.state.description}
           onChange={this.handleChange}
           name="description"
         >
-          Description
+          What does this do? How do you use it?
         </TextArea>
         <Input
           value={this.state.fileType}
           onChange={this.handleChange}
           name="fileType"
         >
-          File Type
+          This goes in your...
         </Input>
         <Input
           value={this.state.githubUrl}
           onChange={this.handleChange}
           name="githubUrl"
         >
-          Github URL
+          Link To Snippet In .dotfiles (optional)
         </Input>
-        <button onClick={this.sendToServer}>Share</button>
+        <Submit onClick={this.sendToServer} />
       </div>
     )
   }
