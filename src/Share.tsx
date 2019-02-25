@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import { Input, TextArea } from "./Input";
+
+import './Share.css'
 
 interface IShareState {
+  snippet: string;
   githubUrl: string;
   fileType: string;
   description: string;
@@ -13,6 +17,7 @@ export default class Share extends Component <{},IShareState> {
       githubUrl: "",
       fileType: "",
       description: "",
+      snippet: "",
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -25,37 +30,54 @@ export default class Share extends Component <{},IShareState> {
   }
 
   private sendToServer() {
-    fetch("http://localhost:9001/api", {
-      method: "POST",
-      mode: "cors", //TODO
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(this.state)
-    }).then(function (response) {
-      console.log(response);
-      return response.json()
-    }).then(myJson => {
-      window.alert(JSON.stringify(myJson))
-    })
+    console.log(this.state)
+    // fetch("http://localhost:9001/api", {
+    //   method: "POST",
+    //   mode: "cors", //TODO
+    //   cache: "no-cache",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(this.state)
+    // }).then(function (response) {
+    //   console.log(response);
+    //   return response.json()
+    // }).then(myJson => {
+    //   window.alert(JSON.stringify(myJson))
+    // })
   }
 
   render() {
     return (
-      <div>
-        <label>
-          Github URL
-          <input type="text" value={this.state.githubUrl} onChange={this.handleChange} name="githubUrl" />
-        </label>
-        <label>
-          File Type
-          <input type="text" value={this.state.fileType} onChange={this.handleChange} name="fileType" />
-        </label>
-        <label>
+      <div className="FormContainer">
+        <TextArea
+          value={this.state.snippet}
+          onChange={this.handleChange}
+          name="snippet"
+        >
+          Snippet
+        </TextArea>
+        <TextArea
+          value={this.state.description}
+          onChange={this.handleChange}
+          name="description"
+        >
           Description
-          <input type="text" value={this.state.description} onChange={this.handleChange} name="description" />
-        </label>
+        </TextArea>
+        <Input
+          value={this.state.fileType}
+          onChange={this.handleChange}
+          name="fileType"
+        >
+          File Type
+        </Input>
+        <Input
+          value={this.state.githubUrl}
+          onChange={this.handleChange}
+          name="githubUrl"
+        >
+          Github URL
+        </Input>
         <button onClick={this.sendToServer}>Share</button>
       </div>
     )

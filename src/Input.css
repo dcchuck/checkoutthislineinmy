@@ -1,0 +1,9 @@
+.Input {
+  display: block;
+  width: 100%;
+}
+
+.ActualInput {
+  display: block;
+  margin: auto;
+}
