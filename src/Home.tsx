@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import SnippetsContainer from "./SnippetsContainer";
 import ListItem from './ListItem';
 
 interface IHomeProps {
@@ -20,9 +21,18 @@ export default class Home extends Component <IHomeProps, {}> {
   render() {
     return(
       <div>
-       <div className="ListItems">
-          {this.records.map(( record, index ) => <ListItem key={index} githubUrl={record.githubUrl} description={record.description} fileType={record.fileType} />)}
-        </div>
+        <SnippetsContainer>
+          {
+            this.records.map(( record, index ) =>
+              <ListItem
+                key={index}
+                githubUrl={record.githubUrl}
+                description={record.description}
+                fileType={record.fileType}
+              />
+            )
+          }
+        </SnippetsContainer>
       </div>
     )
   }
