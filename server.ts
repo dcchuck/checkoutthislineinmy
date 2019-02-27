@@ -3,6 +3,8 @@ import express = require('express');
 import * as bodyParser from 'body-parser';
 import * as Redis from 'ioredis';
 
+import digestName from './src/lib/server/digestName'
+
 interface INewSnippet {
   description: string;
   fileType: string;
